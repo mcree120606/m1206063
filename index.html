@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>$Solpaca</title>
+  <style>
+    .about-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.about-center-content {
+  text-align: center;
+  max-width: 600px;
+}
+
+.about-alpaca {
+  width: 100px;
+  height: auto;
+}
+
+.about-alpaca.flipped {
+  transform: scaleX(-1);
+}
+
+    .home-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: nowrap;
+}
+
+.home-center-content {
+  text-align: center;
+  max-width: 600px;
+}
+
+.home-alpaca {
+  width: 120px;
+  height: auto;
+}
+
+.home-alpaca.flipped {
+  transform: scaleX(-1);
+}
+
+    /* Root Variables */
+    :root {
+      --bg-color: white;
+      --text-color: black;
+      --button-bg: white;
+      --button-text: black;
+      --button-border: black;
+      --button-hover-bg: black;
+      --button-hover-text: white;
+      --link-color: #0077cc;
+    }
+
+    body.dark {
+      --bg-color: #121212;
+      --text-color: #f0f0f0;
+      --button-bg: #1e1e1e;
+      --button-text: #f0f0f0;
+      --button-border: #f0f0f0;
+      --button-hover-bg: #f0f0f0;
+      --button-hover-text: #1e1e1e;
+      --link-color: #66ccff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .home {
+      height: 100vh;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .home h1 {
+      font-size: 3.5rem;
+      margin-bottom: 2rem;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .nav-buttons button {
+      font-size: 1.1rem;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      border: 2px solid var(--button-border);
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      font-weight: bold;
+      border-radius: 8px;
+      transition: all 0.3s;
+      min-width: 120px;
+    }
+
+    .nav-buttons button:hover {
+      background-color: var(--button-hover-bg);
+      color: var(--button-hover-text);
+    }
+
+   .content-section {
+  display: none;
+  max-width: 800px;
+  margin: 1rem auto 1rem; /* Reduced top margin */
+  padding: 1.5rem 2rem;    /* Optional: slightly reduced padding */
+  text-align: center;
+}
+
+
+    .content-section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .content-section p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .social-link img {
+      width: 40px;
+      height: 40px;
+      margin-top: 1rem;
+      transition: transform 0.2s;
+    }
+
+    .social-link img:hover {
+      transform: scale(1.1);
+    }
+
+
+    .back-button {
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: var(--link-color);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .toggle-mode {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: transparent;
+      color: var(--text-color);
+      border: 2px solid var(--button-border);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .toggle-mode:hover {
+      background-color: var(--button-hover-bg);
+      color: var(--button-hover-text);
+    }
+
+    #battlefield {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+
+    .alpaca-side {
+      text-align: center;
+    }
+
+    .alpaca-img {
+      width: 150px;
+      height: auto;
+      margin-bottom: 0.5rem;
+      transition: transform 0.3s;
+    }
+
+    .health-bar {
+      width: 150px;
+      height: 20px;
+      background-color: #ddd;
+      border: 2px solid #999;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    .health-fill {
+      height: 100%;
+      background-color: #4caf50;
+      width: 100%;
+      transition: width 0.3s;
+    }
+
+    .battle-btn {
+      font-size: 1.2rem;
+      padding: 0.7rem 1.5rem;
+      margin-top: 1rem;
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      border: 2px solid var(--button-border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .battle-btn:hover {
+      background-color: var(--button-hover-bg);
+      color: var(--button-hover-text);
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+
+    .alpaca-img.shake,
+    .flipped.shake {
+      animation: shake 0.5s ease;
+    }
+
+    @media (max-width: 600px) {
+      .home h1 {
+        font-size: 2.5rem;
+      }
+
+      .nav-buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-buttons button {
+        width: 100%;
+        max-width: 300px;
+        font-size: 1rem;
+        padding: 0.8rem 1rem;
+      }
+
+      .content-section {
+        padding: 1rem;
+      }
+
+      .content-section h2 {
+        font-size: 1.8rem;
+      }
+
+      .content-section p {
+        font-size: 1rem;
+      }
+      .content-section,
+#home {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.content-section.show,
+#home.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+    }
+  </style>
+</head>
+<body>
+  <button class="toggle-mode" onclick="toggleDarkMode()">
+    <span id="theme-icon">🌙</span> Toggle Dark Mode
+  </button>
+
+  <div class="home" class="section" id="home">
+  <div class="home-horizontal">
+    <img src="images/alpaca1.png" alt="Left Alpaca" class="home-alpaca" />
+
+    
+    <div class="er-content">
+      <h1>$Solpaca</h1>
+      <div class="nav-buttons">
+        <button onclick="showSection('play')">Demo</button>
+        <button onclick="showSection('about')">About</button>   
+      </div>
+      <h2>Real $Solpaca Wagering Coming Soon...</h2>
+      <br />
+      <h3>
+        CA: <span id="ca-text">YOUR_CA_HERE</span>
+        <button onclick="copyCA()">📋 Copy</button>
+        <span id="copy-feedback" style="margin-left: 0.5rem; color: green; display: none;">✅ Copied!</span>
+      </h3>
+      <p style="margin-top: 2rem;">
+  Follow us on X:
+  <br>
+  <a class="social-link" href="https://x.com/yourusername" target="_blank">
+    <img src="images/X2.png" alt="X logo">
+
+  </a>
+</p>
+
+    </div>
+
+    <<img src="images/alpaca1.png" alt="Right Alpaca" class="home-alpaca" />
+
+
+  </div>
+</div>
+
+
+
+  <div class="content-section" id="play">
+    <h2>Battle Arena</h2>
+    <p><strong>Select Your Alpaca:</strong></p>
+<div style="margin-bottom: 1rem;">
+  <label><input type="radio" name="selectedAlpaca" value="left" checked /> Left Alpaca</label>
+  <label style="margin-left: 1rem;"><input type="radio" name="selectedAlpaca" value="right" /> Right Alpaca</label>
+</div>
+
+    <p><strong>$Solpaca Coins:</strong> <span id="coins">1,000,000</span></p>
+    <label for="wager">Wager Amount:</label>
+    <input type="number" id="wager" value="10000" min="1" style="width: 120px; margin: 0.5rem; text-align: center;" />
+    <div id="battlefield">
+      <div class="alpaca-side">
+        <img src="images/alpaca1.png" alt="Alpaca 1" class="alpaca-img" id="alpaca1" />
+        <div class="health-bar"><div class="health-fill" id="fill1"></div></div>
+        <p id="hpText1">Health: 100 / 100</p>
+      </div>
+      <div class="alpaca-side">
+        <img src="images/alpaca1.png" alt="Alpaca 2" class="alpaca-img flipped" id="alpaca2" style="transform: rotateY(180deg);" />
+        <div class="health-bar"><div class="health-fill" id="fill2"></div></div>
+        <p id="hpText2">Health: 100 / 100</p>
+      </div>
+    </div>
+    <button class="battle-btn" onclick="battle()">🐾 Battle!</button>
+    <p id="winner" style="font-size: 1.2rem; font-weight: bold; margin-top: 1rem;"></p>
+    <p><strong>Wins:</strong> <span id="win-count">0</span> |
+   <strong>Losses:</strong> <span id="loss-count">0</span></p>
+
+    <div class="back-button" onclick="goHome()">← Back to Home</div>
+  </div>
+
+  <div class="content-section" id="about">
+  <div class="about-horizontal">
+    <img src="images/alpaca1.png" alt="Left Alpaca" class="about-alpaca" />
+    
+    <div class="about-center-content">
+      <h2>About</h2>
+      <p>Buy $Solpaca now.</p>
+      <p>Alpacas and Solana are eternal.</p>
+      <p>We only buy.</p>
+      <p>In-depth explanation on our X.</p>
+      <p>Our X:</p>
+      <a class="social-link" href="https://x.com/yourusername" target="_blank">
+        <img src="images/X2.png" alt="X logo">
+      </a>
+      <p style="margin-top: 2rem;">
+        CA: <span id="ca-text-2">YOUR_CA_HERE</span>
+        <button onclick="copyCA2()">📋 Copy</button>
+        <span id="copy-feedback-2" style="margin-left: 0.5rem; color: green; display: none;">✅ Copied!</span>
+      </p>
+      <div class="back-button" onclick="goHome()">← Back to Home</div>
+    </div>
+
+    <img src="images/alpaca1.png" alt="Right Alpaca" class="about-alpaca flipped" />
+  </div>
+</div>
+
+  <script>
+   function showSection(sectionId) {
+  // Hide all sections
+  const sections = ['home', 'play', 'about'];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('show');
+    setTimeout(() => {
+      el.style.display = 'none';
+    }, 500);
+  });
+
+  // Show the target section after fade-out
+  const target = document.getElementById(sectionId);
+  setTimeout(() => {
+    target.style.display = sectionId === 'home' ? 'flex' : 'block';
+    requestAnimationFrame(() => {
+      target.classList.add('show');
+    });
+  }, 500);
+
+  window.scrollTo(0, 0);
+}
+
+function goHome() {
+  showSection('home');
+}
+
+      document.getElementById('home').style.display = 'flex';
+      document.getElementById('play').style.display = 'none';
+      document.getElementById('about').style.display = 'none';
+      window.scrollTo(0, 0);
+    
+
+    function toggleDarkMode() {
+      const isDark = document.body.classList.toggle('dark');
+      document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    (function () {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+      if (isDark) {
+        document.body.classList.add('dark');
+        document.getElementById('theme-icon').textContent = '☀️';
+      }
+    })();
+
+    let hp1 = 100;
+    let hp2 = 100;
+    let coins = 1000000;
+    let wins = 0;
+let losses = 0;
+
+
+    function updateCoinsDisplay() {
+      document.getElementById('coins').textContent = coins.toLocaleString();
+    }
+
+    function resetHealth() {
+      hp1 = 100;
+      hp2 = 100;
+      document.getElementById('fill1').style.width = '100%';
+      document.getElementById('fill2').style.width = '100%';
+      document.getElementById('hpText1').textContent = 'Health: 100 / 100';
+      document.getElementById('hpText2').textContent = 'Health: 100 / 100';
+    }
+
+    function battle() {
+      const wager = parseInt(document.getElementById('wager').value, 10);
+
+      if (isNaN(wager) || wager <= 0) {
+        alert('Please enter a valid wager amount.');
+        return;
+      }
+
+      if (wager > coins) {
+        alert("You don't have enough Solpaca Coins!");
+        return;
+      }
+      if (coins < 0) {
+  coins = 0;
+  alert("You're out of Solpaca Coins! Please refresh.");
+}
+
+
+      if (hp1 <= 0 || hp2 <= 0) {
+        resetHealth();
+        document.getElementById('winner').textContent = "";
+      }
+
+      const dmg1 = Math.floor(Math.random() * 20);
+      const dmg2 = Math.floor(Math.random() * 20);
+
+      hp1 = Math.max(0, hp1 - dmg2);
+      hp2 = Math.max(0, hp2 - dmg1);
+
+      document.getElementById('fill1').style.width = hp1 + '%';
+      document.getElementById('fill2').style.width = hp2 + '%';
+
+      
+      document.getElementById('hpText1').textContent = `Health: ${hp1} / 100`;
+      document.getElementById('hpText2').textContent = `Health: ${hp2} / 100`;
+
+
+      const alpaca1 = document.getElementById('alpaca1');
+      const alpaca2 = document.getElementById('alpaca2');
+
+      if (dmg2 > 0) alpaca1.classList.add('shake');
+      if (dmg1 > 0) alpaca2.classList.add('shake');
+
+      setTimeout(() => {
+        alpaca1.classList.remove('shake');
+        alpaca2.classList.remove('shake');
+      }, 500);
+
+      const winnerText = document.getElementById('winner');
+      const selected = document.querySelector('input[name="selectedAlpaca"]:checked').value;
+
+if (hp1 === 0 && hp2 === 0) {
+  winnerText.textContent = "It's a draw!";
+  coins -= wager;
+} else if (hp1 === 0) {
+  winnerText.textContent = "Right Alpaca wins! 🐐";
+  if (selected === "right") {
+    coins += wager;
+    wins++;
+  } else {
+    coins -= wager;
+    losses++;
+  }
+} else if (hp2 === 0) {
+  winnerText.textContent = "Left Alpaca wins! 🐐";
+  if (selected === "left") {
+    coins += wager;
+    wins++;
+  } else {
+    coins -= wager;
+    losses++;
+  }
+} else {
+  winnerText.textContent = "The battle continues!";
+}
+updateCoinsDisplay();
+updateStatsDisplay();
+  document.getElementById('win-count').textContent = wins;
+  document.getElementById('loss-count').textContent = losses;
+}
+
+
+      updateCoinsDisplay();
+
+    updateCoinsDisplay();
+
+function copyCA() {
+  const ca = document.getElementById("ca-text").textContent;
+  navigator.clipboard.writeText(ca).then(() => {
+    const feedback = document.getElementById("copy-feedback");
+    feedback.style.display = "inline";
+    setTimeout(() => feedback.style.display = "none", 1500);
+  });
+}
+
+function copyCA2() {
+  const ca = document.getElementById("ca-text-2").textContent;
+  navigator.clipboard.writeText(ca).then(() => {
+    const feedback = document.getElementById("copy-feedback-2");
+    feedback.style.display = "inline";
+    setTimeout(() => feedback.style.display = "none", 1500);
+  });
+}
+
+  </script>
+</body>
+</html>
